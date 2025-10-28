@@ -1,13 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CustomBreadCrumbs } from "@/components/custom/CustomBreadCrumbs"
+// import { CustomBreadCrumbs } from "@/components/custom/CustomBreadCrumbs"
 import { CustomHeader } from "@/components/custom/CustomHeader"
 import { HeroStats } from "@/heroes/components/HeroStats"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
-import { useMemo } from "react"
+import { use, useMemo } from "react"
 import { CustomPagination } from "@/components/custom/CustomPagination"
 import { useSearchParams } from "react-router"
 import { useHeroSummary } from "@/heroes/hooks/useHeroSummary"
 import { usePaginatedHero } from "@/heroes/hooks/usePaginatedHero"
+import { FavoriteHeroContext } from "@/heroes/context/FavoriteHeroContext"
 
 type Tabs = 'all' | 'favorites' | 'heroes' | 'villains'
 
@@ -18,6 +19,7 @@ interface Props {
 
 export default function HomePage({ totalPages }: Props) {
 
+  const { favoriteCount, favorites } = use(FavoriteHeroContext);
   const [ searchParams, setSearchParams ] = useSearchParams();
   const activeTab = searchParams.get('tab') ?? 'all';
   const page = searchParams.get('page') ?? '1';
@@ -45,7 +47,7 @@ export default function HomePage({ totalPages }: Props) {
         {/* Header */}
         <CustomHeader title="Superhero Universe" description="Explore and manage your superheroes and villians!" />
 
-        <CustomBreadCrumbs currentPage=""/>
+        {/* <CustomBreadCrumbs currentPage=""/> */}
 
         {/* Stats Dashboard */}
         <HeroStats />
@@ -67,7 +69,7 @@ export default function HomePage({ totalPages }: Props) {
                 return prev
               })}
             >
-              Favorites (3)
+              Favorites ({favoriteCount})
             </TabsTrigger>
             <TabsTrigger value="heroes"
               onClick={() => setSearchParams((prev) => {
@@ -93,7 +95,7 @@ export default function HomePage({ totalPages }: Props) {
           </TabsContent>
           <TabsContent value="favorites">
             {/* Mostrar todos los personajes Favoritos */}
-            {/* <HeroGrid /> */}
+            <HeroGrid heroes={favorites}/>
           </TabsContent>
           <TabsContent value="heroes">
             {/* Mostrar todos los personajes heroes */}
@@ -108,7 +110,12 @@ export default function HomePage({ totalPages }: Props) {
         {/* Character Grid */}
 
         {/* Pagination */}
-        <CustomPagination totalPages={HeroesResponse?.pages ?? 1}/>
+
+        {
+          selectedTab !== 'favorites' && (
+            <CustomPagination totalPages={HeroesResponse?.pages ?? 1}/>
+          ) 
+        }
       </>
     </>
   )
