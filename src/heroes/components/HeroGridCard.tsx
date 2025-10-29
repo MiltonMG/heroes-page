@@ -151,7 +151,7 @@ export const HeroGridCard = ({ hero }: Props) => {
             }
             {showAll && (
               <div className="mt-2 flex flex-wrap gap-1">
-                {hero.powers.slice(3).map((power, i) => (
+                {hero.powers.slice(3).map((power) => (
                   <Badge key={power} variant="outline" className="text-xs">
                     {power}
                   </Badge>

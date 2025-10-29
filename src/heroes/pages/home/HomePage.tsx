@@ -12,12 +12,8 @@ import { FavoriteHeroContext } from "@/heroes/context/FavoriteHeroContext"
 
 type Tabs = 'all' | 'favorites' | 'heroes' | 'villains'
 
-interface Props {
-  totalPages:number;
-  limit?:number;
-}
 
-export default function HomePage({ totalPages }: Props) {
+export default function HomePage() {
 
   const { favoriteCount, favorites } = use(FavoriteHeroContext);
   const [ searchParams, setSearchParams ] = useSearchParams();

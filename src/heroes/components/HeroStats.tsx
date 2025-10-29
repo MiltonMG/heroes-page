@@ -3,7 +3,7 @@ import { Users, Heart, Zap } from 'lucide-react';
 import { HeroStatCard } from './HeroStatCard';
 import { useHeroSummary } from '../hooks/useHeroSummary';
 import { FavoriteHeroContext } from '../context/FavoriteHeroContext';
-import { use, useMemo } from 'react';
+import { use } from 'react';
 
 export const HeroStats = () => {
   const { favoriteCount } = use(FavoriteHeroContext)

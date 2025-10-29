@@ -29,7 +29,7 @@ export const CustomPagination = ({ totalPages }: Props) => {
         Previous
       </Button>
       {
-        Array.from({ length: totalPages }).map((array, index) => (
+        Array.from({ length: totalPages }).map((_, index) => (
           <Button
             key={index}
             variant={
